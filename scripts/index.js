@@ -4,6 +4,7 @@ function ProductoSucursal(name, producto) {
     self.name = name;
     self.producto = ko.observable(producto);
     
+
     self.formattedPrice=ko.computed(function(){
         let price=self.producto().price;
         return price ? "$"+price.toFixed(2):"-";
@@ -34,6 +35,10 @@ function ProductoSucursalViewModel() {
     self.quitarProducto=function(pro){
         self.seats.remove(pro)
     }
+
+    self.calcularTotales=ko.computed(function(){
+        return self.seats().reduce((ant,act)=>ant+act.producto().price,0)
+    });
 }
 
 ko.applyBindings(new ProductoSucursalViewModel());
